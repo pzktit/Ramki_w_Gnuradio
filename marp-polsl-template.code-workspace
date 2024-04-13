@@ -1,0 +1,25 @@
+{
+    "folders": [
+        {
+            "path": "."
+        }
+    ],
+    "settings": {
+        "markdown.marp.breaks": "on",
+        "markdown.marp.enableHtml": true,
+        "markdown.marp.themes": [
+            "./slides/themes/custom.css",
+            "./slides/themes/custom-default.css",
+            "./slides/themes/custom-gaia.css",
+            "./slides/themes/custom-uncover.css",
+            "./slides/themes/polsl.css"
+        ],
+        "markdown.marp.exportType": "html"
+    },
+    "extensions": {
+        "recommendations": [
+            "marp-team.marp-vscode",
+            "bierner.markdown-mermaid"
+        ]
+    }
+}

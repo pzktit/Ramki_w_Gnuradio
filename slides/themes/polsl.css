@@ -1,0 +1,227 @@
+/* 
+@theme polsl 
+*/
+
+/* @import "default"; */
+@import "default";
+
+@import url('https://fonts.cdnfonts.com/css/lora-4');
+@import url('https://fonts.cdnfonts.com/css/barlow');
+@import url('https://fonts.cdnfonts.com/css/ibm-plex-sans-3');
+@import url('https://fonts.cdnfonts.com/css/ibm-plex-serif');
+
+:root {
+  --base-color: rgb(219, 223, 227);
+  --text-color: #1c1c1c ;
+  --head-color: #19559b ;
+  --emph-color: #f6b701 ;
+  --alert-color: #d80a1e ;
+  --code-background: rgb(182, 183, 185) ;
+  --overlay: rgb(109, 180, 220) ;
+  --normal-text-weight: 400 ; /* depends on loaded font */
+  --bold-text-weight: 700 ;
+  /* font-family: 'Lora'; */
+  /* font-family: 'Barlow'; */
+  font-family: 'IBM Plex Sans', sans-serif;
+  /* font-family: 'IBM Plex Serif', sans-serif; */
+                                              
+  background-color: var(--base-color) ;
+}
+
+p {
+  font-size: 18pt ;
+  font-weight: var(--normal-text-weight);
+  color: var(--text-color);
+}
+
+h5 {
+  color: var(--alert-color) ;
+  text-align: center ;
+}
+
+h4 {
+  color: var(--emph-color) ;
+  background-color: var(--head-color) ;
+}
+
+h3 {
+  font-size: 120% ;
+  color: var(--head-color) ;
+}
+
+h2 {
+  font-size: 144% ;
+  color: var(--head-color) ;
+  border-bottom: 2px solid var(--emph-color) ; 
+}
+
+code {
+  /* color: var(--base-color) ; */
+  background-color: var(--code-background) ;
+}
+
+marp-pre {
+  font-size: 60% ;
+  /* color: var(--text-color) ;  */
+  background-color: var(--code-background) ;
+}
+
+h1 {
+  font-size: 200% ;
+  color: var(--emph-color) ;
+  text-align: center;
+}
+
+section footer {
+  color: var(--base-color) ;
+  left: 420px ;
+  width: 480px ;
+  text-align: center;
+  font-size: 100% ;
+  background-color: rgba(10,10,10,0);
+}
+
+section::after {
+  color: var(--base-color);
+  font-size: 0.8em;
+  content: " " attr(data-marpit-pagination) "/"
+    attr(data-marpit-pagination-total) " ";
+}
+
+
+.columns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  /* justify-content: center !important; */
+}
+
+.columns-centered {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  /* justify-content: center !important; */
+  justify-items: center;
+  justify-content: center;
+  align-items: center;
+}
+
+.columns p, ul, ol, li {
+  font-size: 80%;
+}
+
+section.titlepage {
+  text-align: center ;
+  font-weight: var(--bold-text-weight);
+  background-color: var(--head-color);
+  color: var(--base-color) ;
+}
+
+section.titlepage .title, 
+section.titlepage h1 {
+  font-size: 200% ;
+  color: var(--emph-color) ;
+}
+
+section.titlepage .subtitle, 
+section.titlepage h2 {
+  border-bottom: 0px solid var(--emph-color) ;   
+  color: var(--emph-color) ;
+}
+
+section.titlepage .author, 
+section.titlepage .date, 
+section.titlepage .organization, 
+section.titlepage h3 {
+  color: var(--base-color) ;
+  /* border-bottom: 1px solid var(--emph-color) ;    */
+}
+
+
+/* 
+
+.hljs-string {
+  color: #be00be;
+}
+.hljs-symbol {
+  color: #be00be;
+}
+.hljs-comment {
+  color: rgb(4, 111, 15) ;
+}
+.hljs-variable {
+  color: var(--base-color);
+}
+.hljs-attr {
+  color: rgb(219, 223, 227) ;
+}
+.hljs-punctuation {
+  color: var(--base-color);
+}
+.hljs-title {
+  color: var(--base-color);
+}
+.hljs-keyword {
+  color: var(--base-color);
+}
+.hljs-literal {
+  color: rgb(226, 244, 239);
+}
+.hljs-type {
+  color: var(--base-color);
+}
+.hljs-number {
+  color: var(--base-color);
+}
+.hljs-built_in {
+  color: rgb(253, 97, 97) ;
+}
+.hljs-params {
+  color: var(--base-color);
+}
+.hljs-meta {
+  color: var(--base-color);
+}  */
+
+section table {
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 0px;
+  width: auto;
+  border: 0;
+  font-size: 80%;
+}
+
+section table th {
+  background-color: var(--head-color);
+  color: var(--base-color);
+  border: 0;
+  border-top: var(--text-color) solid 2px;
+}
+
+section table td {
+  border: 0;
+}
+
+section table tr:nth-child(2) {
+  background-color: var(--emph-color);
+}
+
+section table tr:last-child {
+  border-bottom: var(--text-color) solid 1px;
+}
+
+tr:nth-child(even) {
+  background-color: var(--overlay) !important;
+}
+
+tr:hover {
+  color: var(--head-color);
+  background-color: var(--emph-color);
+  font-weight: bold;
+}
+
+style figcaption {
+  font-size: 80%;
+}
+
