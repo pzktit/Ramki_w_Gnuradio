@@ -1,4 +1,7 @@
----
+--- 
+author: Piotr Zawadzki
+title: "Ramki w GNU Radio"
+lang: polish
 marp: true
 math: mathjax
 theme: polsl
@@ -6,7 +9,8 @@ size: 16:9
 paginate: true
 backgroundImage: url("img/normal-page-background.png") 
 transition: fade
-footer: "**Marp + VS Code**"
+header:
+footer: "**Ramki w** ![w:150](img/Gnuradio_logo.svg.png)"
 ---
 <!-- _class: titlepage -->
 <!-- _backgroundImage: url("img/title-page-background.png") -->
@@ -21,375 +25,334 @@ footer: "**Marp + VS Code**"
 ##
 
 ##
+###
 
-# Jak szybko tworzyć prezentacje
+# Ramki w ![w:200](img/Gnuradio_logo.svg.png)
 
-# korzystając z VS Code i Marp
+### Nadawanie i odbiór asynchroniczny
 
 ### Piotr Zawadzki
 
 ### 24.03.2024 
-
 ---
+## Założenia
 
-## Niezbędne oprogramowanie
-
-###
-
-<div class="columns">
-<div>
-
-- Visual Studio Code,
-- rozszerzenie wspierające Marp,
-- rozszerzenie LTeX może być użyteczne,
-- i już.
-- **nie musisz instalować VS Code. Skorzystaj z [vscode.dev](https://vscode.dev)!**
-
-#### Poradniki
-
-1. [https://www.youtube.com/watch?v=DG7FmbSojeY](https://www.youtube.com/watch?v=DG7FmbSojeY),
-1. [Chris Ayers, Marp - Create Presentations with Markdown](https://dev.to/chris_ayers/marp-create-presentations-with-markdown-5e6k),
-1. [Seven Tips For Getting The Most Out Of Marp](https://www.hashbangcode.com/article/seven-tips-getting-most-out-marp)
-1. [Marpit Markdown](https://marpit.marp.app/markdown)
-
-##### Kontent przygotowuje się w języku Markdown (plus małe wstawki HTML).
-
-</div><div align="center" >
-
-![w:400](img/marp-for-vscode.png)
-
-</div>
-</div>
-
-###
-
-###
-
-
----
-
-## Szablon
-
-Przedstawiony szablon stara się być zgodny z zaleceniami ["Systemu Identyfikacji Wizualnej Politechniki Śląskiej"](https://www.polsl.pl/siwps/).
-
-##### Najlepszym sposobem zapoznania się z procesm składu jest eksperyment z szablonem
-
-#### Kroki niezbędne do instalacji
-
-<div class="columns">
-<div>
-
-- Wykonaj fork tego repozytorium ([https://github.com/pzktit/marp-polsl-template](https://github.com/pzktit/marp-polsl-template)) na swoje konto GitHub. 
-- Otwórz [https://vscode.dev](https://vscode.dev) lub ...
-- Sklonuj repozytorium do lokalnego folderu i uruchom w nim VS Code. Jeżeli nie chcesz instalować zalecanego rozszerzenia otwórz DevContainer.
-
-</div><div>
-
-- Wyedytuj plik `slides/Slides.md`. **Nie zmieniaj jego nazwy**
-- Rozszerzenie `Marp for VS Code` oferuje opcję podglądu wyników oraz eksportu do HTML i PDF.
--  Po wypchnięciu aktualnej treści prezentacji do GH, automatycznie uruchamia się budowanie `GitHub Pages` (budowanie musi być skonfigurowane na `GitHub Actions`). Jeżeli nie chcesz publikować wyników swojej pracy to zmień repo na prywatne albo usuń katalog `.git`.
-
-</div>
-</div>
-
-###
-
-###
-
-<!--
-
-Notatki prowadzącego
-
-* wyjaśnić co to jest `vscode.dev`
-* objaśnić GH pages i co to znaczy, że mają być ustawione GH Actions,
-* wspomnieć o restrykcjach wprowadzynch przez GH na runnery, najlepiej wyświetlić działającą konfiguracje ze swojego konta 
-
--->
-
----
-
-## Plik wejściowy
-
-Plik wejściowy to niemal "zwykły" Markdown. Jedyna różnica polega na wprowadzeniu znaku podziału slajdów w postaci trzech znaków minus (dash): `---`. 
-
-<div class="columns">
-<div>
-
-```
----
-marp: true
-theme: polsl
-size: 16:9
----
-
-## Slajd 1
-
-blah blah blah
-
----
-
-## Slajd 2
-
-blah blah blah
-
-```
-
-</div><div>
-
-- Pierwszy slajd jest specjalny i zawiera preambułę. Dostępne parametry preambuły można sprawdzić w VS Code skrótem `Ctrl+Spacja`.
-- Wokół sekwencji `---` oddzielającej slajdy należy umieścić puste linie.
-- W pliku konfiguracyjnym (`.vscode/settings.json`) VS Code należy poprawnie ustawić opcję umożliwiającą stosowanie wstawek HTML oraz ścieżkę do stylu (jeżeli klonowałeś repozytorium, to już to jest zrobione)
+#### Tylko warstwa łącza
+- Nie opuszczamy abstrakcji bitów.
+- Brak odwołań do symboli
+- Nie ma modulatorów i demodulatorów kanałowych
   
-```json
-"markdown.marp.enableHtml": true,
-"markdown.marp.themes": [
-    "./slides/themes/polsl.css"
-    ],
-"markdown.marp.exportType": "html",
-```
-
-</div>
-</div>
+##### Jednak schemat końcowy jest strukturalnie zgodny z nadajnikiem i odbiornikiem OFDM!
 
 ---
+## Czego mi brakowało w GNU Radio
+i co musiałem dorobić
 
-## Struktura dokumentu
+#
+- Blok, który okresowo wysyła ramkę o treści zadane przez użytkownika - `QT GUI Message PDU Gen`,
+- Model kanału BSC,
 
-##### Sposób składu znaczników podziału na sekcje definiuje styl.
+#
 
-### Podział na sekcje
+#### Jak dodać blok OOT do swojego Gnuradio Companion
+
+1. Wczytać plik schematu bloku do *Gnuradio Companion*.
+1. Wygenerowć "flowgraph".
+1. Bloki OOT są dostępne w kategorii `GRC Hier Blocks`.
+
+#
+
+#
+
+---
+## `npkt_00.grc` Nadajnik i odbiornik zwarte na krótko
 
 <div class="columns">
+<div align="center">
+
+![w:640](img/npkt_00.png)
+
+![w:640](img/npkt_00_run.png)
+
+</div>
 <div>
 
-Strona tytułowa:
+  Nadajnik okresowo produkuje wiadomości,
+które są następnie drukowane.
 
-```
-# Tytuł
-## Podtytuł
-### Autor
-#### Data
-##### Organizacja
-```
-
-</div><div>
-
-Ciało dokumentu:
-
-```
-# Część
-## Tytuł slajdu
-### Nagłówek
-#### Blok
-##### Alert
-```
+- PDU są wewnętrznie reprezentowane jako para:
+- słownik reprezentujący metadane skojarzone z ramką,
+- wektor bajtów.
+ 
+Każdy z tych elementów składowych oraz samo PDU są reprezentowane jako typ Polymorphic Type (PMT) zdefiniowany w Gnuradio
 
 </div>
 </div>
-
-### Szablon można łatwo dostosować
-
-Skład prezentacji jest kontrolowany przez plik `slides/themes/polsl.css`.
-
-###
-
-###
 
 ---
-
-## Zawartość slajdu
-
-### Tekst
-
-Skład slajdu może być jedno i dwukolumnowy. Więcej kolumn łatwo uzyskać, wprowadzając nowe klasy. Jednak celem tego szablonu jest zapewnienie maksymalnej prostoty edycji.
-
+## `npkt_01.grc` Dodano kanał BSC
+Można obserwować wpływ BER na jakość przesyłanych komunikatów. - wystarczą pojedyncze procenty.
 <div class="columns">
-<div>
+<div align="center">
 
-#### Wyliczanka 
-
-To jest zwykły tekst po prostu wystarczy pisać $2\pi r = \sqrt{3 x^3}$ i pisać i pisać.
-- jeden
-- dwa
-- trzy
-
-</div>
-<div>
-
-#### Lista numerowana
-To jest zwykły tekst po prostu wystarczy pisać.
-1. jeden
-2. dwa
-3. **trzy**
-
-</div>
-</div>
-
----
-
-## Zawartość slajdu
-
-###
-
-### Wyrażenia matematyczne
-
-W tekście można umieszczać wyrażenia matematyczne zgodnie ze składnią _TeX_ (a dokładniej _MathJax_). Wrażenia mogą być wstawione $2\pi r = \sqrt{3 x^3}$ oraz wystawione 
-$$  y=\int\limits_{0}^{\infty} e^{-x^2} dx $$
-
-$$f(x) = \int_{-\infty}^\infty \hat f(\xi)\,e^{2 \pi i \xi x} \,d\xi\qquad\qquad I_{xx}=\int\int_Ry^2f(x,y)\cdot{}dydx $$
-
-Jak widać efekt jest całkiem zadowalający. Pionowe wyrównanie tekstu najłatwiej osiągnąć wstawiając puste nagłówki w pożądanych miejscach.
-
-###
-
-###
-
-###
-
----
-
-## Zawartość slajdu
-
-### Kod komputerowy
-
-Obowiązują reguły dokładnie takie same jak dla języka Markdown. Dla większości języków programowania wspierane jest kolorowanie składni. Kolory przypisane do elementów logicznych są kontrolowane w pliku CSS stylu. Aby umieścić kod języka `Python`, należy zastosować następującą konstrukcję
-
-<div class="columns">
-<div>
-
-Fragment pliku `Slides.md`
-
-```
-```py
-# This is a Python script to calculate the factorial of a number
-
-def factorial(n):
-    """This function calculates the factorial of a number"""
-    if n == 0:
-        return 1
-    else:
-        return n * factorial(n-1)
-
-num = 5
-print("Factorial of", num, "is", factorial(num))
-#``` znaku komentarza nie powinno tu być
-```
-
-</div>
-<div>
-
-Uzyskany wynik składu
-```py
-# This is a Python script to calculate the factorial of a number
-
-def factorial(n):
-    """This function calculates the factorial of a number"""
-    if n == 0:
-        return 1
-    else:
-        return n * factorial(n-1)
-
-num = 5
-print("Factorial of", num, "is", factorial(num))
-```
-
-</div>
-</div>
-
-###
-
-###
-
----
-
-## Zawartość slajdu
-
-###
-
-### Slajd może również zawierać grafikę
-
-<div class="columns">
-<div>
-
-- Szczegółowy opis składni umożliwiającej włączenie grafiki opisano w dokumentacji [https://marpit.marp.app/image-syntax](https://marpit.marp.app/image-syntax).
-- należy zwrócić uwagę, że proponowany styl zawiera już obraz tła, zatem korzystanie z opcji `bg` może prowadzić do niepożądanych skutków.
-- Pliki zawierające grafikę nie muszą być zapisane na lokalnym dysku - można się do nich odwoływać poprzez `url`.
-
-```md
-![w:300](https://picsum.photos/720?image=29)
-```
+![w:640](img/npkt_01-trans.png)
 
 </div>
 <div style="justify-self: center; align-self: center">
 
-![w:300](https://picsum.photos/720?image=29)
+- Gdy nie ma źródła sprzętowego `Throttle` jest konieczny.
+- Odbiornik pracuje na strumieniu danych.
+- Gdy nie ma modułu zapewniającego synchronizację to należy ją zapewnić w sposób sztuczny.
+- Do pierwszego bajtu pakietu dodawany jest znacznik (tag) zawierający jego długość (`PDU to Tagged Stream`).
+- `Repack Bits` zapewnia serializację i de-serializację.
+- W kanale obowiązuje sieciowy (MSB) porządek bitów 
+  (*teraz to bez znaczenia, ale bloki realizujące synchronizację spodziewają się właśnie takiego uporządkowania bitów*).
+- Odzyskanie synchronizacji (dzięki znacznikowi `packet_len`) zapewnia `Tagged Stream to PDU`.
 
 </div>
 </div>
 
 ---
+## `npkt_01.grc` Technikalia
+###
+<div class="columns">
+<div style="justify-self: center; align-self: center">
 
-## Zawartość slajdu
+#### Znakowanie danych
+![w:640](img/PDU_to_Tagged_Stream.png)
+
+#### Model kanału
+![w:640](img/BSC_bit_channel.png)
+
+</div>
+<div style="justify-self: center; align-self: center">
+
+#### Serializacja
+![w:640](img/RepackBits.png)
+
+##### Ze względu na wewnętrzne buforowanie zmiana BER *w locie* jest dyskusyjna - zmiana jest widoczna dopiero po pewnych czasie
+
+</div>
+</div>
+
+###
+###
+
+---
+## `npkt_02.grc` Stopień detekcji błędów
+
+<div class="columns">
+<div align="center">
+
+![](img/npkt_02-trans.png)
+
+</div>
+<div style="justify-self: center; align-self: center" >
+
+* `BSC Byte Channel` objemuje bloki realizujące serializację danych,
+* Szkody są duże, dla $BER=1\%$ prawie każdy pakiet jest błędny,
+
+##### Kodowanie nadmiarowe jest niezbędne.
+
+* *bloki `Async CRC16` i `Async CRC32` są **przestarzałe** od **wersji 3.10**.*
+  
+</div>
+</div>
+
+---
+## Kodowanie nadmiarowe w GNU Radio
+
+#
 
 
-### Tabele
+<div class="columns">
+<div align="center">
 
-- Tabele są zawsze wycentrowane (względem slajdu lub kolumny) i mogą zawierać wyrażenia matematyczne
-- Do umieszczania podpisów można wykorzystać makro `figcaption`
+### `Payload Encode`
+
+![](img/pld_encoder-trans.png)
+
+</div>
+<div style="justify-self: center; align-self: center" >
+
+* `FEC Async Encoder` aplikuje kod korekcyjny do PDU,
+* Definicja kodera dla konkretnego jest zewnętrzna w stosunku do bloku,
+* Należy zdefiniować zmienną (obiekt) kodera i przekazać jako parametr,
+* Istnieją gotowe bloki konfigurujące obiekty koderów i pasujących do nich dekoderów: `Dummy ...`, `Repetition ...`, `CC ...`, `TPC ...`, `LDPC ...`, `Polar ...`,
+  
+</div>
+</div>
+
+#
+
+###
+
+###
+
+---
+## Dekodowanie jest trudniejsze
+
+
+<div class="columns">
+<div style="justify-self: center; align-self: center">
+
+### `Payload Decode`
+
+![](img/pld_decoder-trans.png)
+
+</div>
+<div style="justify-self: center; align-self: center" >
+
+* `FEC Async decoder` pracuje na *miękkich* bitach,
+* uporządkowanie bitów ma być zgodne z architekturą systemu (tutaj LSB),
+* parametr `Decoder Obj.` musi być kompatybilny z obiektem kodera. 
+  
+</div>
+</div>
+
+#
+###
+
+--- 
+## Transmisja z kodowaniem nadmiarowym
+
+#
+
+<div align="center"> 
+
+![](img/npkt_03b-trans.png) 
+
+</div>
+
+Dla powtórzeniowego $r=3$ prawie wszystkie pakiety są bezblędne przy stopie $BER=1\%$. 
+
+#
+
+---
+## Nagłówek
+
+<div align="center"> 
+
+![w:900](img/npkt_04_header-trans.png)
+
+</div>
+
+<div class="columns">
+<div style="justify-self: center; align-self: center">
+
+* Za uzupełnienie nagłówka odpowiada `Protocol Formatter (Async)`
+* Za jego wyznaczenie odpowiada obiekt wyprowadzony z klasy `header_format_base`,
+* Dostępne klasy `header_format_default`, `header_format_crc`, `header_format_ofdm` 
+
+
+</div>
+<div style="justify-self: center; align-self: center" >
+
+![](img/tx_format_obj.png)
+
+* `len_key="packet_len"`, `num_key="packet_num"`  
+</div>
+</div>
+
+#
+#
+
+---
+## Typy nagłówków
+
+| `header_format_default` | $\le 64$ bits | 16 bits | 16 bits | |
+| ---                     | --- | --- | --- | --- |
+|                         | access code | pkt len | pkt len (repeated) | payload |
+
+| `header_format_counter` | $\le 64$ bits | 16 bits | 16 bits | 16 bits | 16 bits | |
+| ---                     | --- | --- | --- | --- | --- | --- |
+|                         | access code | pkt len | pkt len (repeated) | bits/symbol | counter | payload |
+
+| `header_format_crc`/`header_format_ofdm` | 0 - 11 | 12 - 23 | 24 - 31 |
+| --- | --- | --- | --- |
+|     | pkt len | counter | CRC8 |
+
+* Nagłówki zawierające `access code` zakładają uporządkowanie sieciowe (MSB) uporządkowanie bajtów i bitów.
+* Nagłówki bez `access_code` zakładają porządek zgodny z architekturą (czyli zazwyczaj LSB). Najwidoczniej zakłada się, że synchronizacja zostanie wykonana inaczej.
+  
+
+---
+## Odbiór z zewnętrzną synchronizacją
+
+![w:1000](img/npkt_05_rcv_nosync-trans.png)
+
+* Obiekt nagłówka `format_header_crc`, dane w trybie LSB, synchronizację zapewnia znacznik określony w `Trigger tag key`.
+* Od momentu pojawienia się znacznika bity z `in` są wystawiane na `out_hdr` do `Protocol Parser` i podejmowana jest próba zdekodowania nagłówka.
+* Zgodność CRC8 włącza interpretację pola długości danych.
+* Na porcie `out_payload` wystawiany jest znacznik określony w `Length tag key` i zawierający zdekodowaną długość danych.
+* Bity z wejścia `in` cały czas idą na `out_payload`, ale bez znacznika są odrzucane przez `Tagged Stream to PDU`.
+  
+#
+
+#
+
+---
+## Synchronizacja na podstawie `access_code`
+
+![w:1200](img/npkt_08_blk-trans.png)
+
+* `access_code=digital.packet_utils.default_access_code`
+* `header_obj=digital.header_format_counter(access_code, 2,1)`
+
+
+###
+###
+
+---
+## Synchronizator z bliska
+
+![w:1200](img/npkt_08_sync-trans.png)
 
 <div class="columns">
 <div>
 
-```md
-| Column A | Column B | Column C | Column D |
-| -------- | ------:  | :------- | :------: |
-| A1       | B1       | C1       |    D1    |
-| A2       | B2       | C2       |    D2    |
-| A3       | B3       | C3       |    $y=\frac{2}{\pi}$    |
-<figcaption style="font-size: 80%; text-align: center">
-Tabela 1. Przykład podpisu pod rysunkiem lub tabelą.
-</figcaption>
-```
+* celem jest wygenerowanie tagu gdy pojawi się odpowiednia sekwencja bitów: `frame_start`,
+* HPL wtedy prześle bity do obiektu nagłówka
 
 </div>
 <div>
 
-| Column A | Column B | Column C | Column D |
-| -------- | ------:  | :------- | :------: |
-| A1       | B1       | C1       |    D1    |
-| A2       | B2       | C2       |    D2    |
-| A3       | B3       | C3       |    D3    |
-| A3       | B3       | C3       |    $y=\frac{2}{\pi}$    |
-<figcaption style="font-size: 80%; text-align: center">
-Tabela 1. Przykład podpisu pod rysunkiem lub tabelą.
-</figcaption>
+* po znalezieniu i interpretacji pól nagłówka obiekt nagłówka na pierwszym bicie danych ustawi znacznik `payload_symbols`,
+* trzeba jeszcze zmienić porząd bitów z sieciowego na natywny dla hosta
 
 </div>
 </div>
 
-
-####
+#
+###
 
 ---
-
-## Skład w wielu kolumnach
-
-###
-###
-###
-
-Możliwość podziału slajdu na dwie kolumny umożliwia kontener `columns`. Jego użycie zilustrowano we wzorcu, więc można go zacząć stosować "na wzór i podobieństwo". Kontener ten jest zrealizowany jako wstawka HTML elementu `grid`. Szczegółowy opis opcji jakie można stosować do wyrównania elementów w poziomie i pionie (przykłady użycia we wzorcu) przedstawiono w dokumencie [Chris House "A Complete Guide to CSS Grid"](https://css-tricks.com/snippets/css/complete-guide-grid/). Na podstawie zamieszczonego tam opisu bardzo łatwo stworzyć wzorce podziału obszaru slajdu na więcej logicznych elementów. Ale to już bardziej złożone zagadnienie.
-
-###
-###
-###
-###
----
-
-##### Podczas eksportu do pliku HTML lokalne pliki graficzne nie są kopiowane. Należy je przenieść osobno i umieścić w odpowiednim podkatalogu względem pliku prezentacji. Podobny problem ma miejsce podczas prezentacji HTML na systemie bez dostępu do sieci! 
-
-##### Format PDF jest samowystarczalny.
+## OFDM Synchronizer
 
 #
 
-# Powodzenia!
+<div align="center"> 
+
+![](img/ofdm_sync-trans.png)
+
+</div>
+
+##### Synchronizator i dekoder nagłówka w OFDM są bardzo zbliżone do przedstawionego schematu
+
+#
+
+#
+
+---
+## OFDM Header Parser
+
+
+
+<div align="center"> 
+
+![](img/ofdm_hdr_decoder-trans.png)
+
+</div>
+
+#
+

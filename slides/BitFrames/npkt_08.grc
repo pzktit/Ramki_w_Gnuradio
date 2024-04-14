@@ -1,0 +1,997 @@
+options:
+  parameters:
+    author: pzawadzki
+    catch_exceptions: 'True'
+    category: '[GRC Hier Blocks]'
+    cmake_opt: ''
+    comment: ''
+    copyright: ''
+    description: ''
+    gen_cmake: 'On'
+    gen_linking: dynamic
+    generate_options: qt_gui
+    hier_block_src_path: '.:'
+    id: npkt_08
+    max_nouts: '0'
+    output_language: python
+    placement: (0,0)
+    qt_qss_theme: ''
+    realtime_scheduling: ''
+    run: 'True'
+    run_command: '{python} -u {filename}'
+    run_options: prompt
+    sizing_mode: fixed
+    thread_safe_setters: ''
+    title: frame synchronization 2 of 2
+    window_size: (1000,1000)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [8, 8]
+    rotation: 0
+    state: enabled
+
+blocks:
+- name: access_code
+  id: variable
+  parameters:
+    comment: ''
+    value: digital.packet_utils.default_access_code
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1400, 16.0]
+    rotation: 0
+    state: true
+- name: fec_decoder_obj
+  id: variable_cc_decoder_def
+  parameters:
+    comment: Cyclic encoder
+    dim1: '1'
+    dim2: '4'
+    framebits: '8000'
+    k: k
+    mode: fec.CC_TRUNCATED
+    ndim: '0'
+    padding: 'True'
+    polys: polys
+    rate: rate
+    state_end: '-1'
+    state_start: '0'
+    value: '"ok"'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [48, 500.0]
+    rotation: 0
+    state: disabled
+- name: fec_decoder_obj
+  id: variable_dummy_decoder_def
+  parameters:
+    comment: Dummy code - no additional protection
+    dim1: '1'
+    dim2: '1'
+    framebits: '8000'
+    ndim: '0'
+    value: '"ok"'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [40, 184.0]
+    rotation: 0
+    state: enabled
+- name: fec_decoder_obj
+  id: variable_repetition_decoder_def
+  parameters:
+    comment: Simple repetition code
+    dim1: '1'
+    dim2: '1'
+    framebits: '8000'
+    ndim: '0'
+    prob: '0.5'
+    rep: rep
+    value: '"ok"'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [56, 312.0]
+    rotation: 0
+    state: disabled
+- name: fec_encoder_obj
+  id: variable_cc_encoder_def
+  parameters:
+    comment: ''
+    dim1: '1'
+    dim2: '1'
+    framebits: '8000'
+    k: k
+    mode: fec.CC_TRUNCATED
+    ndim: '0'
+    padding: 'True'
+    polys: polys
+    rate: rate
+    state_start: '0'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [16, 476.0]
+    rotation: 0
+    state: disabled
+- name: fec_encoder_obj
+  id: variable_repetition_encoder_def
+  parameters:
+    comment: ''
+    dim1: '4'
+    dim2: '1'
+    framebits: '8000'
+    ndim: '0'
+    rep: rep
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [16, 296.0]
+    rotation: 0
+    state: disabled
+- name: fec_encoder_obj
+  id: variable_dummy_encoder_def
+  parameters:
+    comment: ''
+    dim1: '1'
+    dim2: '1'
+    framebits: '8000'
+    ndim: '0'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [8, 160.0]
+    rotation: 0
+    state: enabled
+- name: frame_key
+  id: variable
+  parameters:
+    comment: ''
+    value: '"frame start"'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [824, 88.0]
+    rotation: 0
+    state: enabled
+- name: fs
+  id: variable
+  parameters:
+    comment: bit = 1us
+    value: 1000000/8
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [336, 8.0]
+    rotation: 0
+    state: enabled
+- name: k
+  id: variable
+  parameters:
+    comment: ''
+    value: '7'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [248, 496.0]
+    rotation: 0
+    state: disabled
+- name: len_key
+  id: variable
+  parameters:
+    comment: ''
+    value: '"packet_len"'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [232, 8.0]
+    rotation: 0
+    state: true
+- name: num_key
+  id: variable
+  parameters:
+    comment: ''
+    value: '"packet_num"'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [224, 88.0]
+    rotation: 0
+    state: enabled
+- name: payload_key
+  id: variable
+  parameters:
+    comment: ''
+    value: '"payload symbols"'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [824, 16.0]
+    rotation: 0
+    state: enabled
+- name: polys
+  id: variable
+  parameters:
+    comment: ''
+    value: '[109, 79]'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [248, 640.0]
+    rotation: 0
+    state: disabled
+- name: rate
+  id: variable
+  parameters:
+    comment: ''
+    value: '2'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [248, 568.0]
+    rotation: 0
+    state: disabled
+- name: rep
+  id: variable
+  parameters:
+    comment: ''
+    value: '3'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [240, 312.0]
+    rotation: 0
+    state: disabled
+- name: rx_format_obj
+  id: variable
+  parameters:
+    comment: ''
+    value: digital.header_format_counter(access_code, 2,1)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1016, 16.0]
+    rotation: 0
+    state: enabled
+- name: rx_format_obj
+  id: variable_header_format_default
+  parameters:
+    access_code: '"1010110011011101101001001110001011110010100011000010000011111100"'
+    bps: '1'
+    comment: 'Formatter objects have internal state.
+
+      Different instances of the same class
+
+      should be used to format and parse
+
+      packet header.'
+    threshold: '2'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [616, 8.0]
+    rotation: 0
+    state: disabled
+- name: tx_format_obj
+  id: variable_header_format_default
+  parameters:
+    access_code: '"1010110011011101101001001110001011110010100011000010000011111100"'
+    bps: '1'
+    comment: ''
+    threshold: '0'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [432, 8.0]
+    rotation: 0
+    state: disabled
+- name: tx_format_obj
+  id: variable
+  parameters:
+    comment: 'Formatter objects have internal state.
+
+      Different instances of the same class
+
+      should be used to format and parse
+
+      packet header.'
+    value: digital.header_format_counter(access_code, 0,1)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1192, 16.0]
+    rotation: 0
+    state: enabled
+- name: blocks_char_to_float_0
+  id: blocks_char_to_float
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    scale: '1'
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1440, 944.0]
+    rotation: 180
+    state: true
+- name: blocks_delay_0
+  id: blocks_delay
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    delay: len(access_code)
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    num_ports: '1'
+    showports: 'False'
+    type: byte
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [552, 872.0]
+    rotation: 0
+    state: true
+- name: blocks_repack_bits_bb_0
+  id: blocks_repack_bits_bb
+  parameters:
+    affinity: ''
+    alias: ''
+    align_output: 'False'
+    comment: 'MSB (network) bit order,
+
+      update "packet_len" tag'
+    endianness: gr.GR_MSB_FIRST
+    k: '8'
+    l: '1'
+    len_tag_key: len_key
+    maxoutbuf: '0'
+    minoutbuf: '0'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1224, 200.0]
+    rotation: 0
+    state: true
+- name: blocks_repack_bits_bb_0_0
+  id: blocks_repack_bits_bb
+  parameters:
+    affinity: ''
+    alias: ''
+    align_output: 'False'
+    comment: "bits here are in \nMSB (network) order,"
+    endianness: gr.GR_MSB_FIRST
+    k: '1'
+    l: '8'
+    len_tag_key: payload_key
+    maxoutbuf: '0'
+    minoutbuf: '0'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1224.0, 760]
+    rotation: 90
+    state: true
+- name: blocks_repack_bits_bb_0_0_0
+  id: blocks_repack_bits_bb
+  parameters:
+    affinity: ''
+    alias: ''
+    align_output: 'False'
+    comment: 'we need to repack them to
+
+      LSB order to fullfil
+
+      the requirements of FEC Decoder'
+    endianness: gr.GR_LSB_FIRST
+    k: '8'
+    l: '1'
+    len_tag_key: payload_key
+    maxoutbuf: '0'
+    minoutbuf: '0'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1296.0, 800]
+    rotation: 270
+    state: true
+- name: blocks_tag_gate_0
+  id: blocks_tag_gate
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    propagate_tags: 'False'
+    single_key: '""'
+    type: byte
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [456, 800.0]
+    rotation: 180
+    state: true
+- name: blocks_tag_share_0
+  id: blocks_tag_share
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    io_type: byte
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    share_type: byte
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [696, 880.0]
+    rotation: 0
+    state: true
+- name: blocks_tagged_stream_mux_0
+  id: blocks_tagged_stream_mux
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    lengthtagname: len_key
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    ninputs: '2'
+    tag_preserve_head_pos: '0'
+    type: byte
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [968, 200.0]
+    rotation: 0
+    state: true
+- name: blocks_tagged_stream_mux_1
+  id: blocks_tagged_stream_mux
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: 'Prepend and append some
+
+      random bits to the packet'
+    lengthtagname: len_key
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    ninputs: '3'
+    tag_preserve_head_pos: '0'
+    type: byte
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1640, 184.0]
+    rotation: 0
+    state: true
+- name: blocks_throttle2_0
+  id: blocks_throttle2
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    ignoretag: 'True'
+    limit: items
+    maximum: fs
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    samples_per_second: fs
+    type: byte
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1016, 112.0]
+    rotation: 180
+    state: true
+- name: bsc_channel_0
+  id: bsc_channel
+  parameters:
+    BER: '0'
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1440, 208.0]
+    rotation: 0
+    state: true
+- name: digital_correlate_access_code_tag_xx_0
+  id: digital_correlate_access_code_tag_xx
+  parameters:
+    access_code: digital.packet_utils.default_access_code
+    affinity: ''
+    alias: ''
+    comment: See the "Correlate access code" note.
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    tagname: frame_key
+    threshold: '1'
+    type: byte
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [464, 944.0]
+    rotation: 0
+    state: enabled
+- name: digital_crc_append_0
+  id: digital_crc_append
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    final_xor: '0xFFFFFFFF'
+    initial_value: '0xFFFFFFFF'
+    input_reflected: 'True'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    num_bits: '32'
+    poly: '0x4C11DB7'
+    result_reflected: 'True'
+    skip_header_bytes: '0'
+    swap_endianness: 'False'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [448, 376.0]
+    rotation: 0
+    state: true
+- name: digital_crc_check_0
+  id: digital_crc_check
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: Skip CRC - True
+    discard_crc: 'True'
+    final_xor: '0xFFFFFFFF'
+    initial_value: '0xFFFFFFFF'
+    input_reflected: 'True'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    num_bits: '32'
+    poly: '0x4C11DB7'
+    result_reflected: 'True'
+    skip_header_bytes: '0'
+    swap_endianness: 'False'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1424, 680.0]
+    rotation: 0
+    state: true
+- name: digital_header_payload_demux_0
+  id: digital_header_payload_demux
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: 'header_format_default and header_format_counter
+
+      use message "payload symbols" to pass
+
+      the length of the payload. Use that as Length tag key.
+
+
+      Please use apriopriate setting for "payload_key" variable.'
+    guard_interval: '0'
+    header_len: rx_format_obj.header_nbits()
+    header_padding: '0'
+    items_per_symbol: '1'
+    length_tag_key: payload_key
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    output_symbols: 'True'
+    samp_rate: int(fs)
+    special_tags: ()
+    timing_tag_key: ''
+    trigger_tag_key: frame_key
+    type: byte
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [888, 852.0]
+    rotation: 0
+    state: enabled
+- name: digital_map_bb_0
+  id: digital_map_bb
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    map: '[-1,1]'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1440, 1000.0]
+    rotation: 0
+    state: true
+- name: digital_protocol_formatter_async_0
+  id: digital_protocol_formatter_async
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    format: tx_format_obj
+    maxoutbuf: '0'
+    minoutbuf: '0'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [448, 200.0]
+    rotation: 0
+    state: enabled
+- name: digital_protocol_parser_b_0_0
+  id: digital_protocol_parser_b
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    format: rx_format_obj
+    maxoutbuf: '0'
+    minoutbuf: '0'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [896, 776.0]
+    rotation: 180
+    state: enabled
+- name: fec_async_decoder_0
+  id: fec_async_decoder
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    decoder: fec_decoder_obj
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    mtu: '1500'
+    packed: 'True'
+    rev_pack: 'True'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1432, 800.0]
+    rotation: 180
+    state: enabled
+- name: fec_async_encoder_0
+  id: fec_async_encoder
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    encoder: fec_encoder_obj
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    mtu: '1500'
+    packed: 'True'
+    rev_pack: 'True'
+    rev_unpack: 'True'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [448, 296.0]
+    rotation: 180
+    state: enabled
+- name: msg_pdu_gen_0
+  id: msg_pdu_gen
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    gui_hint: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [440, 448.0]
+    rotation: 180
+    state: true
+- name: msg_pdu_print_0
+  id: msg_pdu_print
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1512, 640.0]
+    rotation: 180
+    state: true
+- name: msg_pdu_print_as_error_0
+  id: msg_pdu_print_as_error
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1512, 752.0]
+    rotation: 180
+    state: true
+- name: note_0
+  id: note
+  parameters:
+    alias: ''
+    comment: "Please select one of the offerered \nFEC protection variants by\nenablig/disabling\
+      \ the group of blocks\nthat define objects used by \nthe encoder/decoder blocks."
+    note: Please select FEC
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [40, 744.0]
+    rotation: 0
+    state: true
+- name: note_0_0
+  id: note
+  parameters:
+    alias: ''
+    comment: "Klasy wykorzystuj\u0105ce access_code do synchronizacji pocz\u0105tku\
+      \ nag\u0142\xF3wka wymagaj\u0105\nstrumienia bit\xF3w MSB i takie nastawy powinny\
+      \ by\u0107 w RepackBits. Podczas parsowania\npakietu do demuxera wystawiana\
+      \ jest d\u0142ugo\u015B\u0107 pola danych (payload) w znaczniku\n\"payload symbols\"\
+      \ i taka warto\u015Bc powinna by\u0107  u\u017Cyta w parametrze \"Length tag\
+      \ key:\" \ndemuxera HPD. Bity w \"out payload\" te\u017C maj\u0105 kolejno\u015B\
+      \u0107 MSB.\n\nD\u0142ugo\u015B\u0107 nag\u0142\xF3wka w bitach mo\u017Cna pobra\u0107\
+      \ z klasy formattera korzystaj\u0105c z metody \nheader_nbits(), np. \"hdr_format_tx.header_nbits()\"\
+      ."
+    note: "Niezgodno\u015Bci formatowania nag\u0142\xF3wk\xF3w"
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1720, 24.0]
+    rotation: 0
+    state: true
+- name: note_1
+  id: note
+  parameters:
+    alias: ''
+    comment: "Searches for the access code. On detection event the tag is added \n\
+      to the output - the first bit after access code. This tag is then transferred\
+      \ \nto the delayed input i.e. to the first bit of the access code.\nDelay is\
+      \ required because ProtocolParser (or HeaderFormatObj) expect \nto find the\
+      \ access code in the parsed header.\n\nThe tag added by the correlator is then\
+      \ used to trigger header/payload \ndemuxing - see the entry \"Trigger tag key:\"\
+      \ of the corresponding block."
+    note: Correlate access code
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1872, 248.0]
+    rotation: 0
+    state: true
+- name: note_2
+  id: note
+  parameters:
+    alias: ''
+    comment: "Poprzedni przyk\u0142ad uzupe\u0142niony o generacj\u0119 losowych bit\xF3\
+      w \notaczaj\u0105cych sekwencje reprezentuj\u0105ce ramki. \n\nCelem tego przyk\u0142\
+      adu jest pokazanie, \u017Ce zastosowana metoda rzeczywi\u015Bcie dzia\u0142\
+      a."
+    note: Co to jest?
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1728, 480.0]
+    rotation: 0
+    state: true
+- name: pdu_pdu_to_tagged_stream_0_0
+  id: pdu_pdu_to_tagged_stream
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    tag: len_key
+    type: byte
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [728, 240.0]
+    rotation: 0
+    state: enabled
+- name: pdu_pdu_to_tagged_stream_0_0_0
+  id: pdu_pdu_to_tagged_stream
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    tag: len_key
+    type: byte
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [728, 176.0]
+    rotation: 0
+    state: enabled
+- name: pdu_tagged_stream_to_pdu_0
+  id: pdu_tagged_stream_to_pdu
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    tag: payload_key
+    type: float
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1440, 880.0]
+    rotation: 0
+    state: true
+- name: rand_bitstream_0
+  id: rand_bitstream
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    len_key: len_key
+    length: '10'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1400, 136.0]
+    rotation: 0
+    state: true
+- name: rand_bitstream_0_0
+  id: rand_bitstream
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    len_key: len_key
+    length: '15'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1408, 264.0]
+    rotation: 0
+    state: true
+- name: virtual_sink_0
+  id: virtual_sink
+  parameters:
+    alias: ''
+    comment: ''
+    stream_id: received_bits
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1664, 360.0]
+    rotation: 180
+    state: true
+- name: virtual_source_1
+  id: virtual_source
+  parameters:
+    alias: ''
+    comment: 'See note. Input from bitwise
+
+      BSC channel with apriopriate
+
+      byte to bit mappings.'
+    stream_id: received_bits
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [632, 768.0]
+    rotation: 180
+    state: true
+
+connections:
+- [blocks_char_to_float_0, '0', pdu_tagged_stream_to_pdu_0, '0']
+- [blocks_delay_0, '0', blocks_tag_share_0, '0']
+- [blocks_repack_bits_bb_0, '0', bsc_channel_0, '0']
+- [blocks_repack_bits_bb_0_0, '0', blocks_repack_bits_bb_0_0_0, '0']
+- [blocks_repack_bits_bb_0_0_0, '0', digital_map_bb_0, '0']
+- [blocks_tag_gate_0, '0', blocks_delay_0, '0']
+- [blocks_tag_gate_0, '0', digital_correlate_access_code_tag_xx_0, '0']
+- [blocks_tag_share_0, '0', digital_header_payload_demux_0, '0']
+- [blocks_tagged_stream_mux_0, '0', blocks_repack_bits_bb_0, '0']
+- [blocks_tagged_stream_mux_0, '0', blocks_throttle2_0, '0']
+- [blocks_tagged_stream_mux_1, '0', virtual_sink_0, '0']
+- [bsc_channel_0, '0', blocks_tagged_stream_mux_1, '1']
+- [digital_correlate_access_code_tag_xx_0, '0', blocks_tag_share_0, '1']
+- [digital_crc_append_0, out, fec_async_encoder_0, in]
+- [digital_crc_check_0, fail, msg_pdu_print_as_error_0, pdus_in]
+- [digital_crc_check_0, ok, msg_pdu_print_0, pdus_in]
+- [digital_header_payload_demux_0, '0', digital_protocol_parser_b_0_0, '0']
+- [digital_header_payload_demux_0, '1', blocks_repack_bits_bb_0_0, '0']
+- [digital_map_bb_0, '0', blocks_char_to_float_0, '0']
+- [digital_protocol_formatter_async_0, header, pdu_pdu_to_tagged_stream_0_0_0, pdus]
+- [digital_protocol_formatter_async_0, payload, pdu_pdu_to_tagged_stream_0_0, pdus]
+- [digital_protocol_parser_b_0_0, info, digital_header_payload_demux_0, header_data]
+- [fec_async_decoder_0, out, digital_crc_check_0, in]
+- [fec_async_encoder_0, out, digital_protocol_formatter_async_0, in]
+- [msg_pdu_gen_0, pdus_out, digital_crc_append_0, in]
+- [pdu_pdu_to_tagged_stream_0_0, '0', blocks_tagged_stream_mux_0, '1']
+- [pdu_pdu_to_tagged_stream_0_0_0, '0', blocks_tagged_stream_mux_0, '0']
+- [pdu_tagged_stream_to_pdu_0, pdus, fec_async_decoder_0, in]
+- [rand_bitstream_0, '0', blocks_tagged_stream_mux_1, '0']
+- [rand_bitstream_0_0, '0', blocks_tagged_stream_mux_1, '2']
+- [virtual_source_1, '0', blocks_tag_gate_0, '0']
+
+metadata:
+  file_format: 1
+  grc_version: 3.10.9.2

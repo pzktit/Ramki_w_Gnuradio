@@ -1,0 +1,165 @@
+options:
+  parameters:
+    author: pzawadzki
+    catch_exceptions: 'True'
+    category: '[GRC Hier Blocks]'
+    cmake_opt: ''
+    comment: ''
+    copyright: ''
+    description: Periodically generate PDUs with textual content that can be changed
+      at runtime
+    gen_cmake: 'On'
+    gen_linking: dynamic
+    generate_options: hb_qt_gui
+    hier_block_src_path: '.:'
+    id: msg_pdu_gen
+    max_nouts: '0'
+    output_language: python
+    placement: (0,0)
+    qt_qss_theme: ''
+    realtime_scheduling: ''
+    run: 'True'
+    run_command: '{python} -u {filename}'
+    run_options: prompt
+    sizing_mode: fixed
+    thread_safe_setters: ''
+    title: QT GUI Message PDU Gen
+    window_size: (1000,1000)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [8, 8]
+    rotation: 0
+    state: enabled
+
+blocks:
+- name: delay
+  id: variable_qtgui_range
+  parameters:
+    comment: ''
+    gui_hint: ''
+    label: 'Delay [ms]:'
+    min_len: '200'
+    orient: QtCore.Qt.Horizontal
+    rangeType: int
+    start: '100'
+    step: '100'
+    stop: '10000'
+    value: '2000'
+    widget: eng
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [344, 32.0]
+    rotation: 0
+    state: true
+- name: blocks_message_strobe_0
+  id: blocks_message_strobe
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: 'autopowtarzanie
+
+      komunikatu'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    msg: 'pmt.intern(b"") '
+    period: delay
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [600, 200.0]
+    rotation: 0
+    state: true
+- name: lambda1
+  id: pdu_pdu_lambda
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: Msg2PDU
+    fn: 'lambda msg: pmt.cons(pmt.PMT_NIL, pmt.init_u8vector(len(pmt.symbol_to_string(msg)),
+      [ord(i) for i in pmt.symbol_to_string(msg)]))'
+    key: ''
+    maxoutbuf: '0'
+    metadict: Raw Message
+    minoutbuf: '0'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [800, 208.0]
+    rotation: 0
+    state: enabled
+- name: pad_sink_0
+  id: pad_sink
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    label: pdus_out
+    num_streams: '1'
+    optional: 'False'
+    type: message
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1056, 208.0]
+    rotation: 0
+    state: true
+- name: pad_source_0
+  id: pad_source
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    label: text_in
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    num_streams: '1'
+    optional: 'True'
+    type: message
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [160, 208.0]
+    rotation: 0
+    state: true
+- name: qtgui_edit_box_msg_0
+  id: qtgui_edit_box_msg
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: "Tre\u015B\u0107 nadawanego komunikatu"
+    gui_hint: ''
+    is_pair: 'False'
+    is_static: 'True'
+    key: ''
+    label: Enter message and press enter
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    type: string
+    value: Akuku, tu pilny student!
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [336, 176.0]
+    rotation: 0
+    state: enabled
+
+connections:
+- [blocks_message_strobe_0, strobe, lambda1, pdu]
+- [lambda1, pdu, pad_sink_0, in]
+- [pad_source_0, out, qtgui_edit_box_msg_0, val]
+- [qtgui_edit_box_msg_0, msg, blocks_message_strobe_0, set_msg]
+
+metadata:
+  file_format: 1
+  grc_version: 3.10.9.2

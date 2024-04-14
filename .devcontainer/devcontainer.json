@@ -8,7 +8,7 @@
          }
     },
     // Use 'forwardPorts' to make a list of ports inside the container available locally.
-    // "forwardPorts": [],
+    "forwardPorts": [80],
     // Use 'postCreateCommand' to run commands after the container is created.
     // "postCreateCommand": "uname -a",
     "postStartCommand": "git config --global --add safe.directory ${containerWorkspaceFolder}",
@@ -36,6 +36,6 @@
     // Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
     // "remoteUser": "root"
     "runArgs": [ // name of the container instance
-         "--name=Marp-Slides"
+         "--name=Ramki_w_Gnuradio"
     ]
 }

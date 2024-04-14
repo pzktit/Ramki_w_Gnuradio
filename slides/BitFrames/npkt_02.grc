@@ -1,0 +1,270 @@
+options:
+  parameters:
+    author: pzawadzki
+    catch_exceptions: 'True'
+    category: '[GRC Hier Blocks]'
+    cmake_opt: ''
+    comment: ''
+    copyright: ''
+    description: ''
+    gen_cmake: 'On'
+    gen_linking: dynamic
+    generate_options: qt_gui
+    hier_block_src_path: '.:'
+    id: npkt_02
+    max_nouts: '0'
+    output_language: python
+    placement: (0,0)
+    qt_qss_theme: ''
+    realtime_scheduling: ''
+    run: 'True'
+    run_command: '{python} -u {filename}'
+    run_options: prompt
+    sizing_mode: fixed
+    thread_safe_setters: ''
+    title: Detection of transmission errors
+    window_size: (1000,1000)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [8, 8]
+    rotation: 0
+    state: enabled
+
+blocks:
+- name: fs
+  id: variable
+  parameters:
+    comment: "Przy takim pr\xF3bkowaniu\njeden bit trwa 1us."
+    value: 1000000/8
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [336, 8.0]
+    rotation: 0
+    state: enabled
+- name: len_key
+  id: variable
+  parameters:
+    comment: ''
+    value: '"packet_len"'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [232, 8.0]
+    rotation: 0
+    state: true
+- name: blocks_tag_debug_0
+  id: blocks_tag_debug
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    display: 'True'
+    filter: '""'
+    name: bytes
+    num_inputs: '1'
+    type: byte
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [736, 280.0]
+    rotation: 0
+    state: disabled
+- name: blocks_throttle2_0
+  id: blocks_throttle2
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: "throttle jest obowi\u0105zkowe\ngdy nie ma sprz\u0119towych\nodbiornik\xF3\
+      w/nadajnik\xF3w."
+    ignoretag: 'True'
+    limit: items
+    maximum: fs
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    samples_per_second: fs
+    type: byte
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [736, 368.0]
+    rotation: 0
+    state: true
+- name: bsc_byte_channel_0
+  id: bsc_byte_channel
+  parameters:
+    BER: '1'
+    affinity: ''
+    alias: ''
+    comment: ''
+    len_key: len_key
+    maxoutbuf: '0'
+    minoutbuf: '0'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [464, 440.0]
+    rotation: 180
+    state: true
+- name: digital_crc_append_0
+  id: digital_crc_append
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    final_xor: '0xFFFFFFFF'
+    initial_value: '0xFFFFFFFF'
+    input_reflected: 'True'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    num_bits: '32'
+    poly: '0x4C11DB7'
+    result_reflected: 'True'
+    skip_header_bytes: '0'
+    swap_endianness: 'False'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [464, 320.0]
+    rotation: 180
+    state: true
+- name: digital_crc_check_0
+  id: digital_crc_check
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: Skip CRC - True
+    discard_crc: 'True'
+    final_xor: '0xFFFFFFFF'
+    initial_value: '0xFFFFFFFF'
+    input_reflected: 'True'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    num_bits: '32'
+    poly: '0x4C11DB7'
+    result_reflected: 'True'
+    skip_header_bytes: '0'
+    swap_endianness: 'False'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [464, 624.0]
+    rotation: 180
+    state: true
+- name: msg_pdu_gen_0
+  id: msg_pdu_gen
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    gui_hint: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [464, 280.0]
+    rotation: 0
+    state: true
+- name: msg_pdu_print_0
+  id: msg_pdu_print
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [464, 584.0]
+    rotation: 0
+    state: true
+- name: msg_pdu_print_as_error_0
+  id: msg_pdu_print_as_error
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [464, 696.0]
+    rotation: 0
+    state: true
+- name: note_0
+  id: note
+  parameters:
+    alias: ''
+    comment: "Proces komunikacji uzupe\u0142niono o mechanizm\nwykrywania b\u0142\u0119\
+      d\xF3w transmisji. Po stronie nadawczej \ndane s\u0105 uzupe\u0142niane o sum\u0119\
+      \ kontroln\u0105 CRC32, \nkt\xF3ra jest sprawdzana po stronie odbiorczej,"
+    note: Co to jest?
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [496, 8.0]
+    rotation: 0
+    state: true
+- name: pdu_pdu_to_tagged_stream_0
+  id: pdu_pdu_to_tagged_stream
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    tag: len_key
+    type: byte
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [464, 384.0]
+    rotation: 0
+    state: true
+- name: pdu_tagged_stream_to_pdu_0
+  id: pdu_tagged_stream_to_pdu
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    tag: len_key
+    type: byte
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [464, 512.0]
+    rotation: 0
+    state: true
+
+connections:
+- [bsc_byte_channel_0, '0', pdu_tagged_stream_to_pdu_0, '0']
+- [digital_crc_append_0, out, pdu_pdu_to_tagged_stream_0, pdus]
+- [digital_crc_check_0, fail, msg_pdu_print_as_error_0, pdus_in]
+- [digital_crc_check_0, ok, msg_pdu_print_0, pdus_in]
+- [msg_pdu_gen_0, pdus_out, digital_crc_append_0, in]
+- [pdu_pdu_to_tagged_stream_0, '0', blocks_tag_debug_0, '0']
+- [pdu_pdu_to_tagged_stream_0, '0', blocks_throttle2_0, '0']
+- [pdu_pdu_to_tagged_stream_0, '0', bsc_byte_channel_0, '0']
+- [pdu_tagged_stream_to_pdu_0, pdus, digital_crc_check_0, in]
+
+metadata:
+  file_format: 1
+  grc_version: 3.10.9.2

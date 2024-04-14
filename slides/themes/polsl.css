@@ -25,7 +25,7 @@
   font-family: 'IBM Plex Sans', sans-serif;
   /* font-family: 'IBM Plex Serif', sans-serif; */
                                               
-  background-color: var(--base-color) ;
+  /* background-color: var(--base-color) ; */
 }
 
 p {
@@ -70,6 +70,10 @@ h1 {
   font-size: 200% ;
   color: var(--emph-color) ;
   text-align: center;
+}
+
+img {
+  background-color: transparent!important;
 }
 
 section footer {
