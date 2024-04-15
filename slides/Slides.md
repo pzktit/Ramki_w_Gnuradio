@@ -33,24 +33,29 @@ footer: "**Ramki w** ![w:150](img/Gnuradio_logo.svg.png)"
 
 ### Piotr Zawadzki
 
-### 24.03.2024 
+### 14.04.2024 
 ---
 ## Założenia
-
+#
+#
 #### Tylko warstwa łącza
 - Nie opuszczamy abstrakcji bitów.
-- Brak odwołań do symboli
-- Nie ma modulatorów i demodulatorów kanałowych
+- Brak odwołań do symboli.
+- Nie ma modulatorów i demodulatorów kanałowych.
   
-##### Jednak schemat końcowy jest strukturalnie zgodny z nadajnikiem i odbiornikiem OFDM!
-
+##### Jednak schemat końcowy jest strukturalnie zgodny z nadajnikaem i odbiornikiem OFDM!
+#
+#
+#
 ---
 ## Czego mi brakowało w GNU Radio
-i co musiałem dorobić
 
 #
-- Blok, który okresowo wysyła ramkę o treści zadane przez użytkownika - `QT GUI Message PDU Gen`,
-- Model kanału BSC,
+
+#### i co musiałem dorobić
+
+- Blok, który okresowo wysyła ramkę o treści zadanej przez użytkownika - `QT GUI Message PDU Gen`.
+- Model kanału BSC.
 
 #
 
@@ -64,9 +69,12 @@ i co musiałem dorobić
 
 #
 
+#
+
 ---
 ## `npkt_00.grc` Nadajnik i odbiornik zwarte na krótko
 
+#
 <div class="columns">
 <div align="center">
 
@@ -89,9 +97,12 @@ Każdy z tych elementów składowych oraz samo PDU są reprezentowane jako typ P
 </div>
 </div>
 
+#
+#
+
 ---
 ## `npkt_01.grc` Dodano kanał BSC
-Można obserwować wpływ BER na jakość przesyłanych komunikatów. - wystarczą pojedyncze procenty.
+Można obserwować wpływ BER na jakość przesyłanych komunikatów. 
 <div class="columns">
 <div align="center">
 
@@ -100,6 +111,7 @@ Można obserwować wpływ BER na jakość przesyłanych komunikatów. - wystarcz
 </div>
 <div style="justify-self: center; align-self: center">
 
+#### Wystarczą pojedyncze procenty.
 - Gdy nie ma źródła sprzętowego `Throttle` jest konieczny.
 - Odbiornik pracuje na strumieniu danych.
 - Gdy nie ma modułu zapewniającego synchronizację to należy ją zapewnić w sposób sztuczny.
@@ -111,6 +123,8 @@ Można obserwować wpływ BER na jakość przesyłanych komunikatów. - wystarcz
 
 </div>
 </div>
+
+#
 
 ---
 ## `npkt_01.grc` Technikalia
@@ -136,11 +150,12 @@ Można obserwować wpływ BER na jakość przesyłanych komunikatów. - wystarcz
 </div>
 
 ###
+
 ###
 
 ---
 ## `npkt_02.grc` Stopień detekcji błędów
-
+#
 <div class="columns">
 <div align="center">
 
@@ -159,6 +174,8 @@ Można obserwować wpływ BER na jakość przesyłanych komunikatów. - wystarcz
 </div>
 </div>
 
+#
+
 ---
 ## Kodowanie nadmiarowe w GNU Radio
 
@@ -176,8 +193,8 @@ Można obserwować wpływ BER na jakość przesyłanych komunikatów. - wystarcz
 <div style="justify-self: center; align-self: center" >
 
 * `FEC Async Encoder` aplikuje kod korekcyjny do PDU,
-* Definicja kodera dla konkretnego jest zewnętrzna w stosunku do bloku,
-* Należy zdefiniować zmienną (obiekt) kodera i przekazać jako parametr,
+* Definicja kodera dla konkretnego kodu jest zewnętrzna w stosunku do bloku `FEC Async Encoder`,
+* Należy zdefiniować zmienną (obiekt) kodera i przekazać ją jako parametr,
 * Istnieją gotowe bloki konfigurujące obiekty koderów i pasujących do nich dekoderów: `Dummy ...`, `Repetition ...`, `CC ...`, `TPC ...`, `LDPC ...`, `Polar ...`,
   
 </div>
@@ -187,7 +204,6 @@ Można obserwować wpływ BER na jakość przesyłanych komunikatów. - wystarcz
 
 ###
 
-###
 
 ---
 ## Dekodowanie jest trudniejsze
@@ -260,6 +276,7 @@ Dla powtórzeniowego $r=3$ prawie wszystkie pakiety są bezblędne przy stopie $
 ---
 ## Typy nagłówków
 
+
 | `header_format_default` | $\le 64$ bits | 16 bits | 16 bits | |
 | ---                     | --- | --- | --- | --- |
 |                         | access code | pkt len | pkt len (repeated) | payload |
@@ -275,6 +292,7 @@ Dla powtórzeniowego $r=3$ prawie wszystkie pakiety są bezblędne przy stopie $
 * Nagłówki zawierające `access code` zakładają uporządkowanie sieciowe (MSB) uporządkowanie bajtów i bitów.
 * Nagłówki bez `access_code` zakładają porządek zgodny z architekturą (czyli zazwyczaj LSB). Najwidoczniej zakłada się, że synchronizacja zostanie wykonana inaczej.
   
+
 
 ---
 ## Odbiór z zewnętrzną synchronizacją
@@ -356,3 +374,135 @@ Dla powtórzeniowego $r=3$ prawie wszystkie pakiety są bezblędne przy stopie $
 
 #
 
+---
+## Moje bloki OOT, `BSC Bit Channel`
+#
+<div class="columns">
+<div style="justify-self: center; align-self: center">
+
+![](img/BSC_channel-trans.png)
+
+</div>
+<div style="justify-self: center; align-self: center" >
+
+### Kolejne kroki
+
+1. `Random Uniform Source` generuje 16-bitową liczbę losową,
+1. liczba jest skalowana na przedział $[-1;0]$,
+1. przedział przesuwa się o $BER$: $b \in [-1+BER; BER]$
+1. progowanie: $b>0 \to 1$, $b\lt 0 \to 0$, procent jedynek wprost proporcjonalny do BER,
+2. gdy $b=1$ to bit wejściowy odwraca operacja xor. 
+
+</div>
+</div>
+
+#
+###
+
+---
+## Moje bloki OOT, `msg_pdu_gen`
+
+<div class="columns">
+<div style="justify-self: center; align-self: center">
+
+![](img/msg_pdu_gen-trans.png)
+
+</div>
+<div style="justify-self: center; align-self: center" >
+
+### Kolejne kroki
+
+1. `QT GUI Message edit Box` pozwala na wprowadzenie treści komunikatu,
+1. który jest powtarzany przez `Message Strobe` co zadany okres czasu,
+1. Parametr `Message PMT` jest zainicjowany do komunikatem pustym: `pmt.intern(b"")`,
+1. Najważniejsza jest funkcja nienazwana funkcja `lambda`, w której na podstawie parametru `msg` jest tworzony PDU: para złożona z pustego słownika oraz wektora bajtów.
+
+</div>
+</div>
+
+```python
+lambda msg: pmt.cons(pmt.PMT_NIL, pmt.init_u8vector(len(pmt.symbol_to_string(msg)), [ord(i) for i in pmt.symbol_to_string(msg)]))
+```
+
+#
+###
+---
+## Moje bloki OOT, `msg_pdu_print`
+
+<div class="columns">
+<div style="justify-self: center; align-self: center">
+
+![](img/msg_pdu_print-trans.png)
+
+</div>
+<div style="justify-self: center; align-self: center" >
+
+### Kolejne kroki
+
+1. `PDU Split` oddziela metadane od danych w PDU,
+5. Funkcja `lambda` konwertuje wektyor bajtów PMT na ciąg znaków,
+6. A potem już tylko wydruk w konsoli.
+
+</div>
+</div>
+
+```python
+lambda u8vector: pmt.intern(''.join(chr(x) for x in pmt.u8vector_elements(u8vector)).encode())
+```
+
+#
+###
+
+---
+## Moje bloki OOT, `Header Prepend`
+###
+###
+
+<div class="columns">
+<div style="justify-self: center; align-self: center">
+
+![](img/header_prepend-trans.png)
+
+</div>
+<div style="justify-self: center; align-self: center" >
+
+### Objaśnienie już było
+
+Celem bloku jest tylko umożliwienie bardziej zwartej reprezentacji nadajnika.
+
+
+</div>
+</div>
+
+#
+#
+###
+
+---
+## Moje bloki OOT, `Header Sync & Parse`
+
+#
+
+![](img/header_sync_and_parse-trans.png)
+
+
+**Do poprawy!** Zmienna `Access Code` powinna być pobrana z obiektu nagłówka `hdr_format_obj`.
+#
+#
+---
+## Credits
+
+#
+[![w:200](img/Gnuradio_logo.svg.png)](https://www.gnuradio.org/)
+
+#
+Prezentacja jest dostępna pod adresem [https://pzktit.github.io/Ramki_w_Gnuradio/](https://pzktit.github.io/Ramki_w_Gnuradio/)
+
+#
+
+Do jej przygotowania wykorzystano [Marp for VS Code](https://marketplace.visualstudio.com/items?itemName=marp-team.marp-vscode) oraz wzorzec [Marp PolSl Template](https://pzktit.github.io/marp-polsl-template/).
+
+#
+#
+#
+#

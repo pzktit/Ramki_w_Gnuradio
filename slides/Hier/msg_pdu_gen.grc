@@ -52,7 +52,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [344, 32.0]
+    coordinate: [768, 104.0]
     rotation: 0
     state: true
 - name: blocks_message_strobe_0
@@ -71,8 +71,8 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [600, 200.0]
-    rotation: 0
+    coordinate: [792, 392.0]
+    rotation: 180
     state: true
 - name: lambda1
   id: pdu_pdu_lambda
@@ -90,7 +90,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [800, 208.0]
+    coordinate: [784, 496.0]
     rotation: 0
     state: enabled
 - name: pad_sink_0
@@ -108,8 +108,8 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1056, 208.0]
-    rotation: 0
+    coordinate: [976.0, 120]
+    rotation: 90
     state: true
 - name: pad_source_0
   id: pad_source
@@ -128,8 +128,8 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [160, 208.0]
-    rotation: 0
+    coordinate: [680.0, 128]
+    rotation: 270
     state: true
 - name: qtgui_edit_box_msg_0
   id: qtgui_edit_box_msg
@@ -150,7 +150,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [336, 176.0]
+    coordinate: [768, 248.0]
     rotation: 0
     state: enabled
 

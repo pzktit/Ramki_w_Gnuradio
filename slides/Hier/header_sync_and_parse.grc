@@ -48,7 +48,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [328, 32.0]
+    coordinate: [328, 40.0]
     rotation: 0
     state: true
 - name: blocks_delay_0
@@ -68,7 +68,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [448, 296.0]
+    coordinate: [336, 272.0]
     rotation: 0
     state: true
 - name: blocks_repack_bits_bb_0_0
@@ -88,8 +88,8 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1272, 344.0]
-    rotation: 0
+    coordinate: [1160.0, 184]
+    rotation: 90
     state: true
 - name: blocks_tag_share_0
   id: blocks_tag_share
@@ -106,7 +106,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [688, 304.0]
+    coordinate: [600, 280.0]
     rotation: 0
     state: true
 - name: digital_correlate_access_code_tag_xx_0
@@ -125,7 +125,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [440, 352.0]
+    coordinate: [336, 328.0]
     rotation: 0
     state: enabled
 - name: digital_header_payload_demux_0
@@ -158,7 +158,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [912, 268.0]
+    coordinate: [792, 260.0]
     rotation: 0
     state: enabled
 - name: digital_protocol_parser_b_0_0
@@ -174,7 +174,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [936, 208.0]
+    coordinate: [792, 192.0]
     rotation: 180
     state: enabled
 - name: hdr_format_obj
@@ -192,7 +192,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [520, 32.0]
+    coordinate: [816, 40.0]
     rotation: 0
     state: enabled
 - name: len_key
@@ -209,7 +209,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [704, 32.0]
+    coordinate: [536, 40.0]
     rotation: 0
     state: true
 - name: note_2
@@ -222,7 +222,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [448, 488.0]
+    coordinate: [192, 632.0]
     rotation: 0
     state: true
 - name: pad_sink_0
@@ -240,8 +240,8 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1480, 352.0]
-    rotation: 0
+    coordinate: [1168.0, 32]
+    rotation: 90
     state: true
 - name: pad_sink_0_0
   id: pad_sink
@@ -258,8 +258,8 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1272, 280.0]
-    rotation: 0
+    coordinate: [1096.0, 32]
+    rotation: 90
     state: true
 - name: pad_sink_0_0_0
   id: pad_sink
@@ -276,8 +276,8 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [688, 208.0]
-    rotation: 180
+    coordinate: [712.0, 40]
+    rotation: 90
     state: true
 - name: pad_source_0
   id: pad_source
@@ -296,8 +296,8 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [224, 368.0]
-    rotation: 0
+    coordinate: [256.0, 40]
+    rotation: 270
     state: true
 
 connections:
@@ -315,4 +315,4 @@ connections:
 
 metadata:
   file_format: 1
-  grc_version: 3.10.8.0
+  grc_version: 3.10.9.2

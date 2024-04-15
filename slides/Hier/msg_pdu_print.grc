@@ -48,7 +48,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [504, 120.0]
+    coordinate: [616, 328.0]
     rotation: 180
     state: enabled
 - name: log_a_0_0_0
@@ -63,8 +63,8 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [248, 128.0]
-    rotation: 180
+    coordinate: [672, 408.0]
+    rotation: 0
     state: true
 - name: pad_source_0
   id: pad_source
@@ -83,8 +83,8 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [968, 104.0]
-    rotation: 180
+    coordinate: [592.0, 128]
+    rotation: 270
     state: true
 - name: pdu_pdu_split_0_0
   id: pdu_pdu_split
@@ -99,8 +99,8 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [768, 96.0]
-    rotation: 180
+    coordinate: [696, 240.0]
+    rotation: 0
     state: enabled
 
 connections:
@@ -110,4 +110,4 @@ connections:
 
 metadata:
   file_format: 1
-  grc_version: 3.10.8.0
+  grc_version: 3.10.9.2
