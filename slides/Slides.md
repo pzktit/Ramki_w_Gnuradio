@@ -29,7 +29,7 @@ footer: "**Ramki w** ![w:150](img/Gnuradio_logo.svg.png)"
 
 # Ramki w ![w:200](img/Gnuradio_logo.svg.png)
 
-### Nadawanie i odbiór asynchroniczny
+### Nadanie i odbiór asynchroniczny
 
 ### Piotr Zawadzki
 
@@ -56,7 +56,9 @@ footer: "**Ramki w** ![w:150](img/Gnuradio_logo.svg.png)"
 #### i co musiałem dorobić
 
 - Blok, który okresowo wysyła ramkę o treści zadanej przez użytkownika - `QT GUI Message PDU Gen`.
+- Blok wypisujący zawartość PDU jako string `PDU print`.
 - Model kanału BSC.
+
 
 #
 
@@ -64,7 +66,7 @@ footer: "**Ramki w** ![w:150](img/Gnuradio_logo.svg.png)"
 
 1. Wczytać plik schematu bloku do *Gnuradio Companion*.
 1. Wygenerowć "flowgraph".
-1. Bloki OOT są dostępne w kategorii `GRC Hier Blocks`.
+1. Bloki OOT stają się wtedy dostępne w kategorii `GRC Hier Blocks`.
 
 #
 
@@ -136,7 +138,7 @@ Można obserwować wpływ BER na jakość przesyłanych komunikatów.
 #### Serializacja
 ![w:640](img/RepackBits.png)
 
-##### Ze względu na wewnętrzne buforowanie zmiana BER *w locie* jest dyskusyjna - zmiana jest widoczna dopiero po pewnych czasie
+##### Ze względu na wewnętrzne buforowanie zmiana BER *w locie* jest dyskusyjna - zmiana jest widoczna dopiero po pewnym czasie
 
 </div>
 </div>
@@ -153,7 +155,7 @@ Można obserwować wpływ BER na jakość przesyłanych komunikatów.
 <div style="justify-self: center; align-self: center" >
 
 * `BSC Byte Channel` objemuje bloki realizujące serializację danych,
-* Szkody są duże, dla $BER=1\%$ prawie każdy pakiet jest błędny,
+* Szkody są duże, dla $BER=1\%$ prawie każdy pakiet jest uszkodzony,
 
 ##### Kodowanie nadmiarowe jest niezbędne.
 
@@ -233,7 +235,7 @@ Dla kodu powtórzeniowego $r=3$ prawie wszystkie pakiety są bezbłędne przy st
 
 * Za uzupełnienie nagłówka odpowiada `Protocol Formatter (Async)`
 * Za jego wyznaczenie odpowiada obiekt wyprowadzony z klasy `header_format_base`,
-* Dostępne klasy `header_format_default`, `header_format_crc`, `header_format_ofdm` 
+* Dostępne klasy `header_format_default`, `header_format_crc`, `header_format_counter`, `header_format_ofdm` 
 
 
 </div>
