@@ -88,7 +88,7 @@ footer: "**Ramki w** ![w:150](img/Gnuradio_logo.svg.png)"
   Nadajnik okresowo produkuje wiadomości,
 które są następnie drukowane.
 
-- PDU są wewnętrznie reprezentowane jako para:
+PDU są wewnętrznie reprezentowane jako para:
 - słownik reprezentujący metadane skojarzone z ramką,
 - wektor bajtów.
  
@@ -112,7 +112,7 @@ Można obserwować wpływ BER na jakość przesyłanych komunikatów.
 <div style="justify-self: center; align-self: center">
 
 #### Wystarczą pojedyncze procenty.
-- Gdy nie ma źródła sprzętowego `Throttle` jest konieczny.
+- `Throttle` jest konieczny gdy nie ma źródła sprzętowego.
 - Odbiornik pracuje na strumieniu danych.
 - Gdy nie ma modułu zapewniającego synchronizację to należy ją zapewnić w sposób sztuczny.
 - Do pierwszego bajtu pakietu dodawany jest znacznik (tag) zawierający jego długość (`PDU to Tagged Stream`).
@@ -240,7 +240,7 @@ Można obserwować wpływ BER na jakość przesyłanych komunikatów.
 
 </div>
 
-Dla powtórzeniowego $r=3$ prawie wszystkie pakiety są bezblędne przy stopie $BER=1\%$. 
+Dla kodu powtórzeniowego $r=3$ prawie wszystkie pakiety są bezbłędne przy stopie $BER=1\%$. 
 
 #
 
@@ -336,7 +336,7 @@ Dla powtórzeniowego $r=3$ prawie wszystkie pakiety są bezblędne przy stopie $
 <div>
 
 * po znalezieniu i interpretacji pól nagłówka obiekt nagłówka na pierwszym bicie danych ustawi znacznik `payload_symbols`,
-* trzeba jeszcze zmienić porząd bitów z sieciowego na natywny dla hosta
+* trzeba jeszcze zmienić porządek bitów z sieciowego na natywny dla hosta
 
 </div>
 </div>
@@ -414,8 +414,8 @@ Dla powtórzeniowego $r=3$ prawie wszystkie pakiety są bezblędne przy stopie $
 
 1. `QT GUI Message edit Box` pozwala na wprowadzenie treści komunikatu,
 1. który jest powtarzany przez `Message Strobe` co zadany okres czasu,
-1. Parametr `Message PMT` jest zainicjowany do komunikatem pustym: `pmt.intern(b"")`,
-1. Najważniejsza jest funkcja nienazwana funkcja `lambda`, w której na podstawie parametru `msg` jest tworzony PDU: para złożona z pustego słownika oraz wektora bajtów.
+1. Parametr `Message PMT` jest zainicjowany komunikatem pustym: `pmt.intern(b"")`,
+1. Najważniejsza jest nienazwana funkcja `lambda`, w której na podstawie parametru `msg` jest tworzony PDU, czyli para złożona z pustego słownika oraz wektora bajtów.
 
 </div>
 </div>

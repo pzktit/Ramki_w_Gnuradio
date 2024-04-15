@@ -51,7 +51,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1320, 200.0]
+    coordinate: [736, 352.0]
     rotation: 0
     state: true
 - name: digital_protocol_formatter_async_0
@@ -67,7 +67,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [752, 200.0]
+    coordinate: [672, 152.0]
     rotation: 0
     state: enabled
 - name: header_formatter_obj
@@ -85,7 +85,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [704, 32.0]
+    coordinate: [648, 32.0]
     rotation: 0
     state: true
 - name: len_key
@@ -102,7 +102,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [888, 32.0]
+    coordinate: [824, 32.0]
     rotation: 0
     state: true
 - name: pad_sink_0
@@ -120,8 +120,8 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1544, 208.0]
-    rotation: 0
+    coordinate: [968.0, 32]
+    rotation: 90
     state: true
 - name: pad_source_0
   id: pad_source
@@ -140,8 +140,8 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [552, 208.0]
-    rotation: 0
+    coordinate: [584.0, 32]
+    rotation: 270
     state: true
 - name: pdu_pdu_to_tagged_stream_0_0
   id: pdu_pdu_to_tagged_stream
@@ -157,8 +157,8 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1080, 240.0]
-    rotation: 0
+    coordinate: [680, 232.0]
+    rotation: 180
     state: enabled
 - name: pdu_pdu_to_tagged_stream_0_0_0
   id: pdu_pdu_to_tagged_stream
@@ -174,8 +174,8 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1080, 176.0]
-    rotation: 0
+    coordinate: [736, 288.0]
+    rotation: 180
     state: enabled
 
 connections:
@@ -188,4 +188,4 @@ connections:
 
 metadata:
   file_format: 1
-  grc_version: 3.10.8.0
+  grc_version: 3.10.9.2
