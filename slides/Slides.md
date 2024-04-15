@@ -33,7 +33,8 @@ footer: "**Ramki w** ![w:150](img/Gnuradio_logo.svg.png)"
 
 ### Piotr Zawadzki
 
-### 14.04.2024 
+### 15.04.2024 
+
 ---
 ## Założenia
 #
@@ -43,10 +44,10 @@ footer: "**Ramki w** ![w:150](img/Gnuradio_logo.svg.png)"
 - Brak odwołań do symboli.
 - Nie ma modulatorów i demodulatorów kanałowych.
   
-##### Jednak schemat końcowy jest strukturalnie zgodny z nadajnikaem i odbiornikiem OFDM!
+##### Jednak schemat końcowy jest strukturalnie zgodny z nadajnikiem i odbiornikiem OFDM!
 #
 #
-#
+
 ---
 ## Czego mi brakowało w GNU Radio
 
@@ -64,10 +65,6 @@ footer: "**Ramki w** ![w:150](img/Gnuradio_logo.svg.png)"
 1. Wczytać plik schematu bloku do *Gnuradio Companion*.
 1. Wygenerowć "flowgraph".
 1. Bloki OOT są dostępne w kategorii `GRC Hier Blocks`.
-
-#
-
-#
 
 #
 
@@ -97,9 +94,6 @@ Każdy z tych elementów składowych oraz samo PDU są reprezentowane jako typ P
 </div>
 </div>
 
-#
-#
-
 ---
 ## `npkt_01.grc` Dodano kanał BSC
 Można obserwować wpływ BER na jakość przesyłanych komunikatów. 
@@ -124,8 +118,6 @@ Można obserwować wpływ BER na jakość przesyłanych komunikatów.
 </div>
 </div>
 
-#
-
 ---
 ## `npkt_01.grc` Technikalia
 ###
@@ -149,10 +141,6 @@ Można obserwować wpływ BER na jakość przesyłanych komunikatów.
 </div>
 </div>
 
-###
-
-###
-
 ---
 ## `npkt_02.grc` Stopień detekcji błędów
 #
@@ -173,8 +161,6 @@ Można obserwować wpływ BER na jakość przesyłanych komunikatów.
   
 </div>
 </div>
-
-#
 
 ---
 ## Kodowanie nadmiarowe w GNU Radio
@@ -200,21 +186,15 @@ Można obserwować wpływ BER na jakość przesyłanych komunikatów.
 </div>
 </div>
 
-#
-
-###
-
-
 ---
 ## Dekodowanie jest trudniejsze
-
 
 <div class="columns">
 <div style="justify-self: center; align-self: center">
 
 ### `Payload Decode`
 
-![](img/pld_decoder-trans.png)
+![h:450](img/pld_decoder-trans.png)
 
 </div>
 <div style="justify-self: center; align-self: center" >
@@ -225,9 +205,6 @@ Można obserwować wpływ BER na jakość przesyłanych komunikatów.
   
 </div>
 </div>
-
-#
-###
 
 --- 
 ## Transmisja z kodowaniem nadmiarowym
@@ -241,8 +218,6 @@ Można obserwować wpływ BER na jakość przesyłanych komunikatów.
 </div>
 
 Dla kodu powtórzeniowego $r=3$ prawie wszystkie pakiety są bezbłędne przy stopie $BER=1\%$. 
-
-#
 
 ---
 ## Nagłówek
@@ -270,29 +245,38 @@ Dla kodu powtórzeniowego $r=3$ prawie wszystkie pakiety są bezbłędne przy st
 </div>
 </div>
 
-#
-#
-
 ---
 ## Typy nagłówków
+
+##### Nagłówki zawierające `access code` zakładają uporządkowanie sieciowe (MSB) uporządkowanie bajtów i bitów.
 
 
 | `header_format_default` | $\le 64$ bits | 16 bits | 16 bits | |
 | ---                     | --- | --- | --- | --- |
 |                         | access code | pkt len | pkt len (repeated) | payload |
 
-| `header_format_counter` | $\le 64$ bits | 16 bits | 16 bits | 16 bits | 16 bits | |
-| ---                     | --- | --- | --- | --- | --- | --- |
-|                         | access code | pkt len | pkt len (repeated) | bits/symbol | counter | payload |
 
-| `header_format_crc`/`header_format_ofdm` | 0 - 11 | 12 - 23 | 24 - 31 |
-| --- | --- | --- | --- |
-|     | pkt len | counter | CRC8 |
 
-* Nagłówki zawierające `access code` zakładają uporządkowanie sieciowe (MSB) uporządkowanie bajtów i bitów.
-* Nagłówki bez `access_code` zakładają porządek zgodny z architekturą (czyli zazwyczaj LSB). Najwidoczniej zakłada się, że synchronizacja zostanie wykonana inaczej.
-  
 
+| `header_format_counter` | $\le 64$ bits | 16 bits | 16 bits            | 16 bits     | 16 bits |         |
+| ---                     | ---           | ---     | ---                | ---         | ---     | ---     |
+|                         | access code   | pkt len | pkt len (repeated) | bits/symbol | counter | payload |
+
+
+---
+## Typy nagłówków
+
+#
+
+#
+
+##### Nagłówki bez `access_code` zakładają porządek zgodny z architekturą (czyli zazwyczaj LSB). Najwidoczniej zakłada się, że synchronizacja zostanie wykonana inaczej.
+
+| `header_format_crc`/`header_format_ofdm` | 0 - 11  | 12 - 23 | 24 - 31 |
+| ---                                      | ---     | ---     | ---     |
+|                                          | pkt len | counter | CRC8    |
+
+#
 
 ---
 ## Odbiór z zewnętrzną synchronizacją
@@ -305,9 +289,6 @@ Dla kodu powtórzeniowego $r=3$ prawie wszystkie pakiety są bezbłędne przy st
 * Na porcie `out_payload` wystawiany jest znacznik określony w `Length tag key` i zawierający zdekodowaną długość danych.
 * Bity z wejścia `in` cały czas idą na `out_payload`, ale bez znacznika są odrzucane przez `Tagged Stream to PDU`.
   
-#
-
-#
 
 ---
 ## Synchronizacja na podstawie `access_code`
@@ -317,14 +298,14 @@ Dla kodu powtórzeniowego $r=3$ prawie wszystkie pakiety są bezbłędne przy st
 * `access_code=digital.packet_utils.default_access_code`
 * `header_obj=digital.header_format_counter(access_code, 2,1)`
 
-
-###
-###
-
 ---
 ## Synchronizator z bliska
 
-![w:1200](img/npkt_08_sync-trans.png)
+<div align="center"> 
+
+![h:350](img/npkt_08_sync-trans.png)
+
+</div>
 
 <div class="columns">
 <div>
@@ -341,9 +322,6 @@ Dla kodu powtórzeniowego $r=3$ prawie wszystkie pakiety są bezbłędne przy st
 </div>
 </div>
 
-#
-###
-
 ---
 ## OFDM Synchronizer
 
@@ -357,26 +335,18 @@ Dla kodu powtórzeniowego $r=3$ prawie wszystkie pakiety są bezbłędne przy st
 
 ##### Synchronizator i dekoder nagłówka w OFDM są bardzo zbliżone do przedstawionego schematu
 
-#
-
-#
-
 ---
 ## OFDM Header Parser
 
-
-
 <div align="center"> 
 
-![](img/ofdm_hdr_decoder-trans.png)
+![h:500](img/ofdm_hdr_decoder-trans.png)
 
 </div>
 
-#
-
 ---
 ## Moje bloki OOT, `BSC Bit Channel`
-#
+
 <div class="columns">
 <div style="justify-self: center; align-self: center">
 
@@ -395,9 +365,6 @@ Dla kodu powtórzeniowego $r=3$ prawie wszystkie pakiety są bezbłędne przy st
 
 </div>
 </div>
-
-#
-###
 
 ---
 ## Moje bloki OOT, `msg_pdu_gen`
@@ -424,8 +391,6 @@ Dla kodu powtórzeniowego $r=3$ prawie wszystkie pakiety są bezbłędne przy st
 lambda msg: pmt.cons(pmt.PMT_NIL, pmt.init_u8vector(len(pmt.symbol_to_string(msg)), [ord(i) for i in pmt.symbol_to_string(msg)]))
 ```
 
-#
-###
 ---
 ## Moje bloki OOT, `msg_pdu_print`
 
@@ -450,9 +415,6 @@ lambda msg: pmt.cons(pmt.PMT_NIL, pmt.init_u8vector(len(pmt.symbol_to_string(msg
 lambda u8vector: pmt.intern(''.join(chr(x) for x in pmt.u8vector_elements(u8vector)).encode())
 ```
 
-#
-###
-
 ---
 ## Moje bloki OOT, `Header Prepend`
 ###
@@ -470,13 +432,8 @@ lambda u8vector: pmt.intern(''.join(chr(x) for x in pmt.u8vector_elements(u8vect
 
 Celem bloku jest tylko umożliwienie bardziej zwartej reprezentacji nadajnika.
 
-
 </div>
 </div>
-
-#
-#
-###
 
 ---
 ## Moje bloki OOT, `Header Sync & Parse`
@@ -487,10 +444,9 @@ Celem bloku jest tylko umożliwienie bardziej zwartej reprezentacji nadajnika.
 
 
 **Do poprawy!** Zmienna `Access Code` powinna być pobrana z obiektu nagłówka `hdr_format_obj`.
-#
-#
+
 ---
-## Credits
+## Uznania
 
 #
 [![w:200](img/Gnuradio_logo.svg.png)](https://www.gnuradio.org/)
@@ -503,6 +459,5 @@ Prezentacja jest dostępna pod adresem [https://pzktit.github.io/Ramki_w_Gnuradi
 Do jej przygotowania wykorzystano [Marp for VS Code](https://marketplace.visualstudio.com/items?itemName=marp-team.marp-vscode) oraz wzorzec [Marp PolSl Template](https://pzktit.github.io/marp-polsl-template/).
 
 #
-#
-#
+
 #
