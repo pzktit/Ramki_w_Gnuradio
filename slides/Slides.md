@@ -35,6 +35,7 @@ footer: "**Ramki w** ![w:150](img/Gnuradio_logo.svg.png)"
 
 ### 15.04.2024 
 
+   
 ---
 ## Założenia
 #
@@ -446,6 +447,19 @@ Celem bloku jest tylko umożliwienie bardziej zwartej reprezentacji nadajnika.
 
 
 **Do poprawy!** Zmienna `Access Code` powinna być pobrana z obiektu nagłówka `hdr_format_obj`.
+
+---
+## Take away
+
+Diagramy przepływu opracowano korzystając z poradnika [Packet Communications](https://wiki.gnuradio.org/index.php/Packet_Communications) znajdującego się w dokumentacji GnuRadio.
+
+### Wnioski
+1. Podczas implementacji diagramów przepływu należy **pilnie** zwrazać uwagę na uporządkowanie bitów:
+   - bloki przeznaczone do pracy z danymi lokalnymi pracują na danych uporządkowanych zgodnie z architekturą systemu (w praktyce LSB),
+   - bloki przeznaczone do pracy z danymi z sieci spodziewają się uporządkowania MSB.
+    **Nieprzestrzegając tej reguły odnosi się wrażenie, że niektóre bloki tajemniczo nie działają - patrz wnioski pod powołanym wyżej poradnikiem**
+1. Obsługa danych pakietowych wymaga zapoznania się ze interfejsem klasy Pythona _PMT_(Polymorphic Type) umożliwiającej enkapsulację różnych typów w tej samej strukturze.
+2. Ramki/Pakiety są obsługiwane jako para PMT. Pierwszy element pary jest słownikiem zawierającym metadane w postaci `klucz->wartość`. Drugi element pary jest wektorem bajtów reprezentującym zawartość ramki.
 
 ---
 ## Uznania
