@@ -65,8 +65,8 @@ footer: "**Ramki w** ![w:150](img/Gnuradio_logo.svg.png)"
 
 #### Jak dodać blok OOT do swojego Gnuradio Companion
 
-1. Wczytać plik schematu bloku do *Gnuradio Companion*.
-1. Wygenerowć "flowgraph".
+1. Wczytać definicję bloku (plik \*.grc) do *Gnuradio Companion*.
+1. Wygenerowć diagram przepływu (tak naprawdę definicję funkcji).
 1. Bloki OOT stają się wtedy dostępne w kategorii `GRC Hier Blocks`.
 
 #
@@ -271,7 +271,6 @@ Dla kodu powtórzeniowego $r=3$ prawie wszystkie pakiety są bezbłędne przy st
 
 #
 
-#
 
 ##### Nagłówki bez `access_code` zakładają porządek zgodny z architekturą (czyli zazwyczaj LSB). Najwidoczniej zakłada się, że synchronizacja zostanie wykonana inaczej.
 
