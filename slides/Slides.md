@@ -8,7 +8,7 @@ theme: polsl
 size: 16:9
 paginate: true
 backgroundImage: url("img/normal-page-background.png") 
-transition: fade
+transition: cube
 header:
 footer: "**Ramki w** ![w:150](img/Gnuradio_logo.svg.png)"
 ---
@@ -33,7 +33,7 @@ footer: "**Ramki w** ![w:150](img/Gnuradio_logo.svg.png)"
 
 ### Piotr Zawadzki
 
-### 15.04.2024 
+### ostatnia aktualizacja: 6 maja 2024 r. 
 
    
 ---
