@@ -251,7 +251,7 @@ Dla kodu powtórzeniowego $r=3$ prawie wszystkie pakiety są bezbłędne przy st
 ---
 ## Typy nagłówków
 
-##### Nagłówki zawierające `access code` zakładają uporządkowanie sieciowe (MSB) uporządkowanie bajtów i bitów.
+##### Nagłówki zawierające `access code` zakładają sieciowe (MSB) uporządkowanie bajtów i bitów.
 
 
 | `header_format_default` | $\le 64$ bits | 16 bits | 16 bits | |
@@ -453,7 +453,7 @@ Celem bloku jest tylko umożliwienie bardziej zwartej reprezentacji nadajnika.
 Diagramy przepływu opracowano korzystając z poradnika [Packet Communications](https://wiki.gnuradio.org/index.php/Packet_Communications) znajdującego się w dokumentacji GnuRadio.
 
 ### Wnioski
-1. Podczas implementacji diagramów przepływu należy **pilnie** zwrazać uwagę na uporządkowanie bitów:
+1. Podczas implementacji diagramów przepływu należy **pilnie** zwracać uwagę na uporządkowanie bitów:
    - bloki przeznaczone do pracy z danymi lokalnymi pracują na danych uporządkowanych zgodnie z architekturą systemu (w praktyce LSB),
    - bloki przeznaczone do pracy z danymi z sieci spodziewają się uporządkowania MSB.
     **Nieprzestrzegając tej reguły odnosi się wrażenie, że niektóre bloki tajemniczo nie działają - patrz wnioski pod powołanym wyżej poradnikiem**
